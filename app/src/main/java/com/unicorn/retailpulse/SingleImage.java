@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,7 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.tensorflow.lite.Interpreter;
+
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 public class SingleImage extends AppCompatActivity implements View.OnClickListener {
 private Button btnloadimage;
@@ -23,18 +30,29 @@ private static final int GALLERY_REQUEST =4 ;
 private ImageView imageselected;
 private TextView tv_output;
 private  String TAG="unicornlog";
+private Interpreter tflite;
+Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_image);
 
         btnloadimage = (Button) findViewById(R.id.btn_mainpage);
-        imageselected=(ImageView)findViewById(R.id.imgselected);
-        tv_output=(TextView)findViewById(R.id.tv_output);
+        imageselected = (ImageView) findViewById(R.id.imgselected);
+        tv_output = (TextView) findViewById(R.id.tv_output);
 
         btnloadimage.setOnClickListener(this);
-
+        float[] outputval=new float[16];
+        try {
+            tflite = new Interpreter(loadModelFile());
+            tflite.run(bitmap,outputval);
+            Log.e(TAG, "onCreate: "+outputval[0]);
         }
+        catch(Exception ex)
+        {
+            Log.e(TAG, "onCreate: "+ex.toString());
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -67,7 +85,7 @@ private  String TAG="unicornlog";
             if (requestCode == GALLERY_REQUEST&&data!=null) {
 
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                      Log.d(TAG, String.valueOf(bitmap));
                     ImageView imageView = findViewById(R.id.imgselected);
                     imageselected.setImageBitmap(bitmap);
@@ -78,4 +96,22 @@ private  String TAG="unicornlog";
             }
         }
     }
+
+
+
+    public void doInference(Bitmap bitmap)
+    {
+
+        Log.e(TAG, "doInference: +");
+    }
+
+    private MappedByteBuffer loadModelFile() throws IOException {
+        AssetFileDescriptor fileDescriptor = this.getAssets().openFd("model.tflite");
+        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
+        FileChannel fileChannel = inputStream.getChannel();
+        long startOffset = fileDescriptor.getStartOffset();
+        long declaredLength = fileDescriptor.getDeclaredLength();
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
+    }
+
 }
