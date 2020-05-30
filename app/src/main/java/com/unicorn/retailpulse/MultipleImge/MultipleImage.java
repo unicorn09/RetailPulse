@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -31,6 +32,7 @@ public class MultipleImage extends AppCompatActivity {
     private Button btn_multichoose;
     private  ImageFragmentPagerAdapter imageFragmentPagerAdapter;
     private ViewPager viewPager;
+    public static final String TAG="MultiImage";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,7 @@ public class MultipleImage extends AppCompatActivity {
                 catch (FileNotFoundException e)
                 {
                     e.printStackTrace();
+                    //Log.e(TAG, "onActivityResult: "+e.toString());
                 }
             }
             imageFragmentPagerAdapter = new ImageFragmentPagerAdapter(MultipleImage.this,bitmaps);
