@@ -108,7 +108,7 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
 
 
 
-                    bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
+                     bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
                      interpreter=new Interpreter(loadModelFile(getAssets(),MODEL_PATH));
 
                     ByteBuffer byteBuffer = convertBitmapToByteBuffer(bitmap);

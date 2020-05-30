@@ -33,9 +33,6 @@ public class MultipleImage extends AppCompatActivity {
     int num_columns = 3;
     private  ImageFragmentPagerAdapter imageFragmentPagerAdapter;
     private ViewPager viewPager;
-    private Uri uri;
-    Intent data1;
-    Uri[] bitmaps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +90,6 @@ public class MultipleImage extends AppCompatActivity {
                     InputStream is=getContentResolver().openInputStream(imageuri);
                     Bitmap bitmap= BitmapFactory.decodeStream(is);
                     bitmaps.add(bitmap);
-
                 }
                 catch (FileNotFoundException e)
                 {
@@ -102,13 +98,6 @@ public class MultipleImage extends AppCompatActivity {
             }
             imageFragmentPagerAdapter = new ImageFragmentPagerAdapter(MultipleImage.this,bitmaps);
             viewPager.setAdapter(imageFragmentPagerAdapter);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-
-                }
-            });
             }
         }
     }
