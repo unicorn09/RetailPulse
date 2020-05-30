@@ -117,13 +117,13 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
                         euclidianDistance=new EuclidianDistance(result);
                         if(euclidianDistance.calculatedis(result)==0)
                         {
-                            tv_output.setText("Stone");
+                            tv_output.setText("Rock");
                             tv_output.setVisibility(View.VISIBLE);
 
                         }
                         else if(euclidianDistance.calculatedis(result)==1)
                         {
-                            tv_output.setText("Rock");
+                            tv_output.setText("Paper");
                             tv_output.setVisibility(View.VISIBLE);
 
                         }
@@ -132,7 +132,7 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
                             tv_output.setText("Scissors");
                             tv_output.setVisibility(View.VISIBLE);
                         }
-                  //  Log.e(TAG, "onActivityResult: "+result[0][0]+" "+result[0][15] );
+                   Log.e(TAG, "onActivityResult: "+result[0][0]+" "+result[0][15] );
                     imageselected.setImageBitmap(bitmap);
                     tv_output.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
