@@ -1,11 +1,9 @@
 package com.unicorn.retailpulse.MultipleImge;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.unicorn.retailpulse.EuclidianDistance;
 import com.unicorn.retailpulse.R;
-import com.unicorn.retailpulse.TensorflowImage;
 
 import org.tensorflow.lite.Interpreter;
 

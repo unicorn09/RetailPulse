@@ -1,9 +1,8 @@
 package com.unicorn.retailpulse.MultipleImge;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
@@ -11,13 +10,14 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
+
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+
+import android.widget.TextView;
 
 import com.unicorn.retailpulse.R;
 
@@ -28,9 +28,7 @@ import java.util.List;
 
 public class MultipleImage extends AppCompatActivity {
     private static final int GALLERY_REQUEST = 404;
-    RecyclerView recyclerView;
     private Button btn_multichoose;
-    int num_columns = 3;
     private  ImageFragmentPagerAdapter imageFragmentPagerAdapter;
     private ViewPager viewPager;
     @Override
@@ -45,7 +43,10 @@ public class MultipleImage extends AppCompatActivity {
         btn_multichoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView tv=findViewById(R.id.tv_slider);
+
                 openGallery();
+                tv.setVisibility(View.VISIBLE);
             }
         });
 
@@ -65,7 +66,6 @@ public class MultipleImage extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GALLERY_REQUEST&&resultCode == Activity.RESULT_OK) {
-           // final ImageView imageView=findViewById(R.id.img_multi);
             final List<Bitmap> bitmaps=new ArrayList<>();
             ClipData clipData=data.getClipData();
 

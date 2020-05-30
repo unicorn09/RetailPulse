@@ -3,16 +3,30 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="#000000"
+
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_multiplepage"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="450dp"
         android:layout_centerVertical="true"
         >
     </androidx.viewpager.widget.ViewPager>
+<TextView
+    android:id="@+id/tv_slider"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"
+    android:text="SLIDER"
+    android:textColor="#fff"
+    android:visibility="gone"
+    android:textSize="30sp">
 
+</TextView>
     <Button
+
         android:id="@+id/btn_multiplepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

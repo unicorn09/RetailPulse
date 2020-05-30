@@ -73,7 +73,7 @@ public class EuclidianDistance {
 
         }
         //Log.e(TAG, "calculatedis: "+label[min_index]);
-        Log.e(TAG, "calculatedis: "+min_index);
+       // Log.e(TAG, "calculatedis: "+min_index);
         return label[min_index];
     }
 
