@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
@@ -39,20 +38,17 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
     private ImageView imageselected;
     private TextView tv_output;
     private  String TAG="unicornlog";
-    private Interpreter tflite;
-    Bitmap bitmap;
+    private Bitmap bitmap;
+    private Interpreter interpreter;
     float[][] outputval;
 
     private static final String MODEL_PATH = "model.tflite";
-    private static final boolean QUANT = true;
     private static final int INPUT_SIZE = 300;
 
-    private static final int MAX_RESULTS = 3;
+
     private static final int BATCH_SIZE = 1;
     private static final int PIXEL_SIZE = 3;
-    private static final float THRESHOLD = 0.1f;
-    private static final int IMAGE_MEAN = 255;
-    private static final float IMAGE_STD = 255;
+
 
     private Executor executor = Executors.newSingleThreadExecutor();
     private int inputSize=INPUT_SIZE;
@@ -113,9 +109,7 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
 
 
                     bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
-                    Interpreter interpreter=new Interpreter(loadModelFile(getAssets(),MODEL_PATH));
-
-                   // final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
+                     interpreter=new Interpreter(loadModelFile(getAssets(),MODEL_PATH));
 
                     ByteBuffer byteBuffer = convertBitmapToByteBuffer(bitmap);
                         float[][] result = new float[1][16];
@@ -170,10 +164,6 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
         for (int i = 0; i < inputSize; ++i) {
             for (int j = 0; j < inputSize; ++j) {
                 final int val = intValues[pixel++];
-
-//                byteBuffer.putFloat((((val >> 16) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
-//                byteBuffer.putFloat((((val >> 8) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
-//                byteBuffer.putFloat((((val) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
 
                 byteBuffer.putFloat(((val>> 16) & 0xFF) / 255.f);
                 byteBuffer.putFloat(((val>> 8) & 0xFF) / 255.f);
