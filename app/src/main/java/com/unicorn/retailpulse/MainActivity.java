@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.unicorn.retailpulse.MultipleImge.MultipleImage;
+
 public class MainActivity extends AppCompatActivity {
 private Button btn_single;
 private Button btn_multiple;
@@ -31,7 +33,7 @@ private Button btn_multiple;
         btn_multiple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,MultipleImage.class));
+                startActivity(new Intent(MainActivity.this, MultipleImage.class));
             }
         });
     }
