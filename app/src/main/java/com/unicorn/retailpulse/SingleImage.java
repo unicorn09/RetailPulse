@@ -51,17 +51,20 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
     private static final int BATCH_SIZE = 1;
     private static final int PIXEL_SIZE = 3;
     private static final float THRESHOLD = 0.1f;
-    private static final int IMAGE_MEAN = 128;
-    private static final float IMAGE_STD = 128.0f;
+    private static final int IMAGE_MEAN = 255;
+    private static final float IMAGE_STD = 255;
 
     private Executor executor = Executors.newSingleThreadExecutor();
     private int inputSize=INPUT_SIZE;
 
+    private EuclidianDistance euclidianDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_image);
+
+
 
         btnloadimage = (Button) findViewById(R.id.btn_mainpage);
         imageselected = (ImageView) findViewById(R.id.imgselected);
@@ -117,8 +120,25 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
                     ByteBuffer byteBuffer = convertBitmapToByteBuffer(bitmap);
                         float[][] result = new float[1][16];
                         interpreter.run(byteBuffer, result);
-                        Log.e(TAG, "recognizeImage: "+result[0][0]);
+                        euclidianDistance=new EuclidianDistance(result);
+                        if(euclidianDistance.calculatedis(result)==0)
+                        {
+                            tv_output.setText("Stone");
+                            tv_output.setVisibility(View.VISIBLE);
 
+                        }
+                        else if(euclidianDistance.calculatedis(result)==1)
+                        {
+                            tv_output.setText("Rock");
+                            tv_output.setVisibility(View.VISIBLE);
+
+                        }
+                        else
+                        {
+                            tv_output.setText("Scissors");
+                            tv_output.setVisibility(View.VISIBLE);
+                        }
+                  //  Log.e(TAG, "onActivityResult: "+result[0][0]+" "+result[0][15] );
                     imageselected.setImageBitmap(bitmap);
                     tv_output.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -151,12 +171,15 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
             for (int j = 0; j < inputSize; ++j) {
                 final int val = intValues[pixel++];
 
-                byteBuffer.putFloat((((val >> 16) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
-                byteBuffer.putFloat((((val >> 8) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
-                byteBuffer.putFloat((((val) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
+//                byteBuffer.putFloat((((val >> 16) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
+//                byteBuffer.putFloat((((val >> 8) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
+//                byteBuffer.putFloat((((val) & 0xFF)-IMAGE_MEAN)/IMAGE_STD);
+
+                byteBuffer.putFloat(((val>> 16) & 0xFF) / 255.f);
+                byteBuffer.putFloat(((val>> 8) & 0xFF) / 255.f);
+                byteBuffer.putFloat((val & 0xFF) / 255.f);
 
                 }
-
             }
 
         return byteBuffer;
