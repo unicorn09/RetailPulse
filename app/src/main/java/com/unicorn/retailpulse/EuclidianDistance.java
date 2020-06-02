@@ -60,7 +60,6 @@ public class EuclidianDistance {
     {
         this.context=context;
         data=ret;
-
     }
 
 
