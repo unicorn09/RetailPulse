@@ -79,5 +79,5 @@ public class Data {
    {
        return a;
    }
-
+   public int[] getLabel(){return label;}
 }
