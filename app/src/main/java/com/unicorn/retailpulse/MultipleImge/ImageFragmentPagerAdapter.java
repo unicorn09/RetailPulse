@@ -78,7 +78,7 @@ public class ImageFragmentPagerAdapter extends PagerAdapter {
         ByteBuffer byteBuffer = convertBitmapToByteBuffer(bitmaps.get(position));
         float[][] result = new float[1][16];
         interpreter.run(byteBuffer, result);
-        euclidianDistance=new EuclidianDistance(result);
+        euclidianDistance=new EuclidianDistance(context,result);
         if(euclidianDistance.calculatedis(result)==0)
         {
             textView.setText("Rock");

@@ -1,4 +1,4 @@
-package com.unicorn.retailpulse;
+package com.unicorn.retailpulse.SingleImage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.unicorn.retailpulse.EuclidianDistance;
+import com.unicorn.retailpulse.R;
+
 import org.tensorflow.lite.Interpreter;
 
 import java.io.FileInputStream;
@@ -25,7 +28,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -114,7 +116,7 @@ public class SingleImage extends AppCompatActivity implements View.OnClickListen
                     ByteBuffer byteBuffer = convertBitmapToByteBuffer(bitmap);
                         float[][] result = new float[1][16];
                         interpreter.run(byteBuffer, result);
-                        euclidianDistance=new EuclidianDistance(result);
+                        euclidianDistance=new EuclidianDistance(this,result);
                         if(euclidianDistance.calculatedis(result)==0)
                         {
                             tv_output.setText("Rock");

@@ -23,7 +23,7 @@
         <activity android:name=".MultipleImge.MultipleImage"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".SingleImage"
+            android:name=".SingleImage.SingleImage"
             android:screenOrientation="portrait">
 
         </activity>

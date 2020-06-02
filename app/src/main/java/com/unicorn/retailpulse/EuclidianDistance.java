@@ -1,6 +1,15 @@
 package com.unicorn.retailpulse;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class EuclidianDistance {
     public static final String TAG="Eucldist";
@@ -45,9 +54,10 @@ public class EuclidianDistance {
     int label[]={2,1,2,0,0,0,1,1,2,1,2,2,0,0,0,2,2,2,0,1,1,0,1,1,2,2,0,0,2,0,2,0};
 
 
-
-    public EuclidianDistance(float  ret[][] )
+    private Context context;
+    public EuclidianDistance(Context context,float  ret[][] )
     {
+        this.context=context;
         data=ret;
     }
 
@@ -56,6 +66,12 @@ public class EuclidianDistance {
     //it will calculate min distance and return label
     public int calculatedis(float dis[][])
     {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString(TAG, "");
+        Type type = new TypeToken<List<Double>>() {}.getType();
+        List<Double> arrayList = gson.fromJson(json, type);
+
         double min=Double.MAX_VALUE;
         int min_index=0;
         for(int i=0;i<32;i++)
